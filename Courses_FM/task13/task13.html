@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+  Write a program that reads a sentence through a prompt, and then takes a single letter (character) through the next prompt.
+  Print all the positions where that letter (character) is found.
+  Input:
+  Marta has a cat
+  a
+
+  Output:
+  Character 'a' found at positions 1, 4, 7, 10, 13
+   */
+
+  let sentence = prompt("Enter a sentence:");
+
+  let char = prompt("Enter a character to search for:");
+
+  let found = '';
+
+  for (let i = 0; i < sentence.length; i++) {
+    if (sentence[i] === char) {
+      found += i + ", ";
+    }
+  }
+
+  // Remove the last comma and space, if `found` is not empty
+  if (found.length > 0) {
+    found = found.slice(0, -2);
+  }
+
+  if (found) {
+    alert(`Character '${char}' found at positions: ${found}`);
+  } else {
+    alert(`Character '${char}' not found in the sentence.`);
+  }
+
+</script>
+
+</body>
+</html>

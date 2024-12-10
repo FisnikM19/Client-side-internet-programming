@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+  Create a program where the user inputs a string and a number at the beginning.
+The string needs to be shifted for the same amount of spots as the inputted number.
+If the number is positive, shift the string to the right, if it is negative, shift it to the left.
+
+Example:
+Input:
+Enter string:
+Ipnks
+Enter number:
+8
+Output:
+Shifted string: nksIp
+   */
+
+  let str = prompt("Enter string:");
+
+  if (!str) {
+    alert("Invalid input! String cannot be empty.");
+  } else {
+
+    let num = parseInt(prompt("Enter number:"));
+    if (isNaN(num)) {
+      alert("Invalid input! Please enter a valid number.");
+    } else {
+      // Function to shift the string
+      function shiftString(s, n) {
+        let len = s.length;
+
+        // Handle large numbers and negatives
+        n = n % len; // Ensure the shift wraps around the string length
+        console.log(n);
+        if (n < 0) n += len; // Convert negative shifts to equivalent positive shifts
+
+        console.log(s.slice(-n));
+        console.log(s.slice(0, -n));
+
+        // Perform the shift
+        return s.slice(-n) + s.slice(0, -n);
+
+      }
+
+      // Get the shifted string
+      let shiftedString = shiftString(str, num);
+
+      // Display the result
+      document.write("<h3>Shifted string: " + shiftedString + "</h3>");
+    }
+  }
+
+
+</script>
+
+</body>
+</html>

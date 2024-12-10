@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+  Make a web page where from the keyboard (via prompt) you will enter 3 strings.
+  It should print the longest word within all 3 strings in an alert window.
+
+Example Input:
+
+First laboratory exercise
+
+It's very hot in this lab
+
+It's a beautiful day outside
+
+Output: laboratory
+   */
+
+  let str1 = prompt("Enter the first string:");
+  let str2 = prompt("Enter the second string:");
+  let str3 = prompt("Enter the third string:");
+
+  let allStr = str1 + " " + str2 + " " + str3;
+
+  let count = 0, max = -1;
+  let maxStr;
+  for (let i = 0; i < allStr.length; i++) {
+    if (allStr[i] !== " ") {
+      count++;
+    } else {
+      if (count > max) {
+        max = count;
+        maxStr = allStr.substring(i - count, i);
+      }
+      count = 0;
+    }
+  }
+
+  alert(`The longest substring from these 3 strings is: ${maxStr}`);
+
+</script>
+
+</body>
+</html>

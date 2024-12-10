@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+Write a program in which the user is given the option whether they want to enter a number or not.
+If they decide not to, in an alert window write a message that they will not enter a number.
+If they decide to enter a number, an option is given to write a number.
+If the user instead doesn't write a number or declines the offer, alert them that a mistake has happened.
+Otherwise, you need to alert the user whether the number given is even or odd.
+   */
+
+  let decide = confirm("Do you want to enter a number or not?");
+
+  if (decide) {
+    let input = parseInt(prompt("Write a number:"));
+
+    if (isNaN(input)) {
+      alert('Invalid input!');
+    } else {
+      if (input % 2 === 0) {
+        alert(`The number ${input} is even!`);
+      } else {
+        alert(`The number is ${input} is odd!`);
+      }
+    }
+  } else {
+    alert(`You have not decided to enter a number!`);
+  }
+
+</script>
+
+</body>
+</html>

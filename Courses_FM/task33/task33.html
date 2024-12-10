@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    #form {
+      margin: 20px;
+    }
+
+    label {
+      display: inline-block;
+      width: 150px;
+    }
+    div {
+      padding: 10px 0;
+    }
+
+    table {
+      margin: 20px;
+    }
+
+    td, th{
+      border: 1px solid;
+      border-collapse: collapse;
+      padding: 10px 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="form">
+  <div>
+    <label for="name">Name of product</label>
+    <input type="text" id="name">
+  </div>
+  <div>
+    <label for="code">Code</label>
+    <input type="text" id="code">
+  </div>
+  <div>
+    <label for="price">Price</label>
+    <input type="text" id="price">
+  </div>
+  <div>
+    <label for="quantity">Quantity sold</label>
+    <input type="text" id="quantity">
+  </div>
+  <div>
+    <button onclick="insert()">Add</button>
+  </div>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Total sales</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+
+<script>
+  /*
+Create a web page to record products sold. Enter the product name, its code, the product quantity and the price in text fields. Add a column to the table for the total product sales.
+If you are adding an existing product, change the data only in the table, do not add it to a new row.
+
+Note: All fields must be filled in before adding!
+   */
+
+  function insert() {
+    let name = document.getElementById("name").value.trim();
+    let code = document.getElementById("code").value.trim();
+    let price = parseInt(document.getElementById("price").value.trim());
+    let quantity = parseInt(document.getElementById("quantity").value.trim());
+
+    if (!name || !code || isNaN(price) || isNaN(quantity) || price <= 0 || quantity <= 0) {
+      alert('All fields must be filled with valid values!');
+      return;
+    }
+
+    let tbody = document.querySelector("tbody");
+    let rows = tbody.querySelectorAll("tr");
+    let productExists = false;
+
+    for (let row of rows) {
+      let rowName = row.children[0].innerText;
+      let rowCode = row.children[1].innerText;
+
+      // Check if the product already exists based on name and code
+      if (rowName === name && rowCode === code) {
+        let existingPrice = parseInt(row.children[2].innerText);
+        if (existingPrice !== price) {
+          alert('Price mismatch for the same product! Update aborted.');
+          return;
+        }
+
+        let currentQuantity = parseInt(row.children[3].innerText);
+        let newQuantity = currentQuantity + quantity;
+        row.children[3].innerText = newQuantity; // Update quantity
+        row.children[4].innerText = newQuantity * price; // Update total sales
+
+        productExists = true;
+        break;
+      }
+    }
+
+    if (!productExists) {
+      // Add a new row if the product doesn't exist
+      const newRow = tbody.insertRow();
+      newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${code}</td>
+        <td>${price}</td>
+        <td>${quantity}</td>
+        <td>${quantity * price}</td>
+        `;
+    }
+  }
+</script>
+</body>
+</html>

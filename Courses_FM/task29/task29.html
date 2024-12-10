@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+Write a program where the user inputs users. The users are entered in the following format:
+
+firstName,lastName,email,phoneNumber; firstName,lastName,email,phoneNumber...
+
+Next, a prompt window opens where the user enters an email provider, and based on that, the array of objects is filtered.
+Additionally, a new property is added to each object to indicate the type of mobile provider based on the phone number.
+
+070/071/072 - Telekom
+073/074 - Lyca Mobile
+075/076/077/078 - A1
+079 - MTEL
+
+Additionally, to print the objects, you can use the function JSON.stringify()
+To add an additional property to the object, try using the "..." (spread) operator
+
+Input Example:
+Петар,Петревски,petar.petrovski@gmail.com,0712345678; Марко,Марковски,marko.markovski@yahoo.com,0709876543; Јована,Јовановска,jovana.jovanovska@gmail.com,0723456789; Александар,Алексовски,alex.aleksovski@hotmail.com,0751234567
+   */
+
+  let input = prompt("Enter users in this format: firstName,lastName,email,phoneNumber; firstName,lastName,email,phoneNumber...");
+
+  let emailProvider = prompt("Enter an email provider: (ex: gmail, yahoo, hotmail, outlook)");
+
+  let users = input.split(";");
+
+  let obj = [];
+  for (let u of users) {
+    let arr = u.split(",");
+
+    if (arr.length !== 4) {
+      alert("Invalid format! Each user must have firstName, lastName, email, and phoneNumber.");
+      continue;
+    }
+
+    const [name, lastname, email, phone] = arr;
+
+    let type = phone.slice(0, 3); // Extract phone prefix
+    let phoneOperator = '';
+
+    switch (type) {
+      case '070':
+      case '071':
+      case '072':
+        phoneOperator = 'Telekom';
+        break;
+      case '073':
+      case '074':
+        phoneOperator = 'Lyca Mobile';
+        break;
+      case '075':
+      case '076':
+      case '077':
+      case '078':
+        phoneOperator = 'A1';
+        break;
+      case '079':
+        phoneOperator = 'MTEL';
+        break;
+      default:
+        phoneOperator = 'Invalid operator!';
+        break;
+    }
+
+    // Create user object with the new "phoneOperator" property
+    let user = {
+      firstName: name,
+      lastName: lastname,
+      email: email,
+      phone: phone,
+      phoneOperator: phoneOperator
+    };
+
+    obj.push(user);
+  }
+
+  // Filter users by the given email provider
+  let filteredUsers = obj.filter(user => user.email.includes(emailProvider));
+
+  // Display the filtered users as a JSON string
+  if (filteredUsers.length > 0) {
+    console.log("Filtered Users:");
+    console.log(JSON.stringify(filteredUsers, null, 2)); // Pretty-print JSON
+  } else {
+    console.log(`No users found with the email provider: ${emailProvider}`);
+  }
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+Write a program that will enable the conversion of temperature from degrees Celsius to degrees Fahrenheit and vice versa.
+First, enter in window whether we want to convert to Celsius or Fahrenheit (C or F), and then enter the temperature.
+The formula for Celsius to Fahrenheit is:
+F = C * 9/5 + 32
+
+Fahrenheit to Celsius:
+C = (F - 32) * 5/9
+*/
+    let input = prompt("Press (F) for Fahrenheit or Press (C) for Celsius");
+    let temperature = prompt("Enter a temperature: ");
+
+    if (input === "F") {
+        let result = (parseFloat(temperature) * 9/5) + 32;
+        alert("The temperature is: " + result.toFixed(2) + "F");
+    } else if (input === "C") {
+        let result = (parseFloat(temperature) - 32) * 5/9;
+        alert("The temperature is: " + result.toFixed(2) + "C");
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+    A program should be written that takes 2 words (separated by a space) in one prompt. It is necessary to check whether those 2 words contain the same letters.
+     If they contain the same letters, it should print: "No differences found"; otherwise, it should print which letters from which word are different.
+
+     Example 1:
+     Input:
+     listen silent
+     Output:
+     No differences found.
+
+     Example 2:
+     Input:
+     one two
+     Output:
+     Differences found:
+     'n' in one, 'e' in one, 't' in two, 'w' in two
+     */
+
+    let input = prompt("Enter two words separated by space:");
+
+    if (!input || !input.includes(" ")) {
+        alert('Invalid input! Please provide two words separated by a space.');
+    } else {
+        let words = input.split(" ");
+        if (words.length !== 2) {
+            alert("Invalid input! Make sure to enter exactly two words separated by a space.");
+        } else {
+            let word1 = words[0];
+            let word2 = words[1];
+
+
+            let result = '';
+
+            for (let i = 0; i < word1.length; i++) {
+                if (!word2.includes(word1[i])) {
+                    result += `'${word1[i]}' in ${word1}, `;
+                }
+            }
+
+            for (let i = 0; i < word2.length; i++) {
+                if (!word1.includes(word2[i])) {
+                    result += `'${word2[i]}' in ${word2}, `
+                }
+            }
+
+
+
+            if (result.length === 0) {
+                document.write('No differences found!');
+            } else {
+                // Remove the last comma and space, if `result` is not empty
+                result = result.slice(0, -2);
+                document.write("Differences found: " + "<br>");
+                document.write(result);
+            }
+        }
+    }
+
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+  A program should be written where the user inputs a sentence. The program should change the order of the words and print them in reverse order,
+  ensuring each word starts with a capital letter, while the rest are in lowercase.
+  Example:
+  Input:
+  mnOgU sAkAM ProGRAMIRanje
+   */
+
+  let sentence = prompt("Enter a sentence:");
+
+  let str = sentence.split(" ");
+
+  str = str.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+  str = str.reverse().join(' ');
+
+  console.log(str);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sentence Cleaner</title>
+</head>
+<body>
+
+<script>
+  /*
+  Create a program that takes a sentence from the user.
+  From the sentence, all characters that are not letters or spaces should be removed.
+  Then, from the same sentence, all duplicate letters should be eliminated, and the result should be displayed on the screen.
+
+  Input:
+  Th3 quick b6own fOx jumpS over l@zy d0g!
+
+  Output:
+  Result: Th quick bown fx jmpS ver lzy dg
+   */
+
+  let sentence = prompt("Enter a sentence:");
+
+  // Step 1: Remove all non-letter and non-space characters
+  let cleanedSentence = sentence.replace(/[^a-zA-Z\s]/g, "");
+
+  // Step 2: Remove duplicate letters from the cleaned sentence
+  let seen = new Set(); // To keep track of seen characters
+  let result = "";
+
+  for (let char of cleanedSentence) {
+    if (!seen.has(char.toLowerCase()) || char === " ") {
+      result += char;
+      if (char !== " ") {
+        seen.add(char.toLowerCase()); // Consider case-insensitive duplicates
+      }
+    }
+  }
+
+  alert(`Result: ${result}`);
+</script>
+
+</body>
+</html>

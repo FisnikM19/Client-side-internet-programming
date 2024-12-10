@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+
+    #form {
+      margin: 20px;
+    }
+
+    label {
+      display: inline-block;
+      width: 100px;
+    }
+    div {
+      padding: 10px 0;
+    }
+
+    table {
+      margin: 20px;
+    }
+
+    td, th{
+      border: 1px solid;
+      border-collapse: collapse;
+     padding: 10px;
+    }
+
+  </style>
+</head>
+<body>
+
+<div id="form">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name">
+  </div>
+  <div>
+    <label for="quantity">Quantity sold</label>
+    <input type="text" id="quantity">
+  </div>
+  <div>
+    <button onclick="update()">Update</button>
+  </div>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Total sales</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="fruit">Apples</td>
+    <td>122</td>
+    <td>20</td>
+    <td>17</td>
+    <td>340</td>
+  </tr>
+  <tr>
+    <td class="fruit">Pears</td>
+    <td>123</td>
+    <td>15</td>
+    <td>15</td>
+    <td>225</td>
+  </tr>
+  <tr>
+    <td class="fruit">Cherries</td>
+    <td>124</td>
+    <td>100</td>
+    <td>2</td>
+    <td>200</td>
+  </tr>
+  <tr>
+    <td class="fruit">Peaches</td>
+    <td>125</td>
+    <td>55</td>
+    <td>6</td>
+    <td>330</td>
+  </tr>
+  </tbody>
+</table>
+<script>
+  /*
+  Create a web page for recording products sold. You are given a table with products. In the input fields, enter the name of the product and its quantity sold.
+   By clicking the 'Update' button, the quantity is increased and the total sales are calculated.
+
+Note: All fields must be filled in before updating!
+   */
+
+  function update() {
+    let name = document.getElementById("name").value;
+    let quantity = parseInt(document.getElementById("quantity").value);
+
+    if (!name || isNaN(quantity) || quantity <= 0) {
+      alert('All fields must be filled with valid values!');
+      return;
+    }
+
+    let fruits = document.querySelectorAll(".fruit");
+    let updated = false;
+
+    for (let f of fruits) {
+      if (f.innerText === name) {
+        let row = f.parentElement; // Get the parent <tr> of the matching fruit
+        let quantityCell = row.children[3]; // Quantity column
+        let totalSalesCell = row.children[4]; // Total sales column
+        let price = parseInt(row.children[2].innerText); // Price column
+
+        let currentQuantity = parseInt(quantityCell.innerText);
+        let newQuantity = currentQuantity + quantity;
+
+        quantityCell.innerText = newQuantity; // Update quantity
+        totalSalesCell.innerText = newQuantity * price; // Update total sales
+
+        updated = true;
+        break;
+      }
+    }
+
+    if (!updated) {
+      alert('Product not found!');
+    }
+  }
+</script>
+
+</body>
+</html>

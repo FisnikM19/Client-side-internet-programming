@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+  Write a program where the user initially enters either circle or square. Then, for a circle, the radius is entered, while for a square, the side is entered.
+  The program should calculate the area and perimeter of each and print how many times one is greater than the other.
+
+Circle:
+Perimeter: 2rPI
+Area: r^2PI
+
+Square:
+Perimeter: 4a
+Area: a^2
+If something other than circle or square is entered, it should print that the input is not valid.
+   */
+
+  let input = prompt("Enter either circle or square in lowercase:");
+
+  if (input === 'square') {
+    let side = parseInt(prompt("Enter the side of square:"));
+
+    let perimeter = 4 * side;
+    let area = Math.pow(side, 2);
+
+    if (perimeter > area) {
+      let difference = perimeter - area;
+      alert(`The perimeter of the square is greater than the area for: ${difference}`);
+    } else {
+      let difference = area - perimeter;
+      alert(`The area of the square is greater than the perimeter for: ${difference}`);
+    }
+  } else if (input === 'circle') {
+    let radius = parseInt(prompt("Enter the radius:"));
+
+    let perimeter = 2*radius*Math.PI;
+    let area = Math.pow(radius, 2)*Math.PI;
+    if (perimeter > area) {
+      let difference = perimeter - area;
+      alert(`The perimeter of the circle is greater than the area for: ${difference}`);
+    } else {
+      let difference = area - perimeter;
+      alert(`The area of the circle is greater than the perimeter for: ${difference}`);
+    }
+
+  } else {
+    alert('Invalid input!');
+  }
+
+</script>
+
+</body>
+</html>

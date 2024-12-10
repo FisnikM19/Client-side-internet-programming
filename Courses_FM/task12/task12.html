@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+  A string is entered through a prompt window. Replace all numbers greater than or equal to 32 inside the string with the corresponding ASCII character.
+
+Help:
+The function that can be used for conversion is String.fromCharCode()
+
+Example:
+Zdravo,32kako32s105? -> Zdravo, kako si?
+
+Another example:
+Hello45world32! -> Hello-world !
+
+   */
+
+  let input = prompt("Enter a string:");
+
+  // Use a regular expression to find numbers 32 or greater
+  let result = input.replace(/\d{2,}/g, match => {
+    let num = parseInt(match);
+    return num >= 32 ? String.fromCharCode(num) : match; // Replace with ASCII char if >= 32
+  });
+
+  alert(`Transformed string: ${result}`);
+
+  // match represents the matched number in the string.
+  //  The pattern /\d{2,}/g matches numbers with two or more digits.
+
+</script>
+
+</body>
+</html>

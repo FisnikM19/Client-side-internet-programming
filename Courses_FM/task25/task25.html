@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Runner with Lowest Average Time</title>
+</head>
+<body>
+
+<script>
+    /*
+    One CSV file stores information about runners in the format:
+code,name,surname,run1time,run2time,...,runNtime
+Ex.
+123,Petko,Petkovski,32,53,13,45,33
+Write a program in which the information about the runners is written at the input and the runner with the lowest average time will be printed.
+
+Example input:
+124,Jane,Doe,28,42,55,37,49;125,Emily,Johnson,40,32;126,Michael,Brown,29,33,48,51,44,45,50,47;127,Sarah,Williams,34,54,23,38;128,David,Jones,45
+
+Output: Emily Johnson
+     */
+
+    let input = prompt("Enter the format: code,name,surname,run1time,run2time,...,runNtime (e.g., 124,Jane,Doe,28,42,55,37,49;125,Emily,Johnson,40,32)");
+
+    let parts = input.split(";");
+
+    let minAvg = Infinity;
+    let fullName = '';
+
+    for (let p of parts) {
+        let runners = p.split(",");
+
+        let [code, name, surname, ...times] = runners;
+
+        console.log(runners);
+
+        let sum = 0;
+        let count = 0;
+        for (let t of times) {
+            if (!isNaN(parseInt(t))) {
+                count++;
+                sum += parseInt(t);
+            }
+        }
+
+        let avg = sum / count;
+        if (avg < minAvg) {
+            minAvg = avg;
+            fullName = name + " " + surname;
+        }
+    }
+
+    alert(fullName);
+</script>
+
+</body>
+</html>

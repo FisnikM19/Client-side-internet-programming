@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Equation Calculator</title>
+</head>
+<body>
+
+<label for="equation">Enter Equation:</label>
+<input type="text" id="equation">
+<button id="calculateButton">calculate</button>
+
+<script>
+  /*
+You need to write a program where the user enters values in the form of words, and the program should perform the corresponding operation when the "calculate" button is pressed.
+At that moment, the button should change to "Clear input" and when pressed again, the input field should become empty, and the button should revert to "calculate".
+Example:
+Input: one plus one
+Output: 2
+
+Allowed Operations: plus, minus, times, divided_by
+   */
+
+  const wordToNumber = {
+    "zero": 0,
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10
+  };
+
+  const operations = {
+    "plus": "+",
+    "minus": "-",
+    "times": "*",
+    "divided_by": "/"
+  }
+
+  const button = document.getElementById("calculateButton");
+  const input = document.getElementById("equation");
+
+  button.addEventListener("click", () => {
+    if (button.textContent === "calculate") {
+      const equation = input.value.toLowerCase();
+      const tokens = equation.split(" ");
+
+      // Convert the input into a mathematical expression
+      // -- #1 --
+      // let expression = tokens.map(token =>
+      //         wordToNumber[token] !== undefined ? wordToNumber[token] :
+      //                 operations[token] !== undefined ? operations[token] : token).join(" ");
+
+      // -- #2 --
+      let expression = tokens.map(token => {
+        if (wordToNumber[token] !== undefined) {
+          return wordToNumber[token]
+        } else {
+          if (operations[token] !== undefined) {
+            return operations[token];
+          } else {
+            return token;
+          }
+        }
+      }).join(" ");
+
+      try {
+        const result = eval(expression);
+        input.value = result;
+        button.textContent = "Clear input";
+      } catch (error) {
+        alert("Invalid input! Please check the format.")
+      }
+    } else {
+      input.value = "";
+      button.textContent = "calculate";
+    }
+  })
+</script>
+
+</body>
+</html>

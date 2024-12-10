@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+    Write a program in which, through a single prompt, the user should enter a first name, last name, email, and phone number. The user inputs data until they enter "*".
+The entered inputs should be saved as objects and printed in the console in JSON format, sorted by the entered first name, only including those objects whose phone numbers start with 073.
+
+Input:
+
+Marta Martevska marta.martevska@mail.com 078234567
+
+Stefan Stefanov stefan.stefanov@mail.com 073234567
+
+Iva Ivanovska iva.ivanovska@mail.com 073123456
+
+ Output:
+
+[
+  {
+    "name": "Iva",
+    "surname": "Ivanovska",
+    "email": "iva.ivanovska@mail.com",
+    "phone": "073123456"
+  },
+  {
+    "name": "Stefan",
+    "surname": "Stefanov",
+    "email": "stefan.stefanov@mail.com",
+    "phone": "073234567"
+  }
+]
+
+     */
+
+    let obj = [];
+    while (true) {
+        let input = prompt("Enter FirstName LastName Email PhoneNumber (to terminate, enter '*')");
+
+        if (input === '*') break;
+
+        let parts = input.split(" ");
+
+        if (parts.length !== 4) {
+            alert("Invalid format! Enter exactly: FirstName LastName Email PhoneNumber.");
+            continue;
+        }
+
+        const [name, surname, email, phone] = parts;
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Invalid email format!");
+            continue;
+        }
+
+        // Validate phone number
+        if (!/^\d{9}$/.test(phone)) {
+            alert("Invalid phone number format! It must contain exactly 9 digits.");
+            continue;
+        }
+
+        if (phone.startsWith('073')) {
+            obj.push({ name, surname, email, phone });
+        }
+
+    }
+    // Sort the objects by first name
+    obj.sort((a, b) => a.name.localeCompare(b.name));
+
+    alert(JSON.stringify(obj, null, 2));
+
+    /*
+    The statement alert(JSON.stringify(obj, null, 2)); is used to convert the JavaScript object obj into a readable JSON string and print it to the browser's console.
+
+Here's a breakdown of its components:
+
+JSON.stringify(value, replacer, space)
+The JSON.stringify() function converts a JavaScript object or array into a JSON-formatted string. It has three parameters:
+
+value: The object or array you want to stringify. In this case, obj.
+replacer: This is optional and allows you to filter or modify the properties to be included in the JSON string. null means no filtering is applied (include all properties).
+space: This is optional and specifies the number of spaces to use for pretty-printing the JSON string. Passing 2 makes the output more readable by using 2 spaces for indentation.
+     */
+</script>
+
+</body>
+</html>

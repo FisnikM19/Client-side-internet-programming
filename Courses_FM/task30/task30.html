@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    input {
+      margin: 3% 10px;
+    }
+    table, th, td {
+      border: 1px solid;
+      border-collapse: collapse;
+      padding: 5px 25px;
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+
+<label for="num">Enter n:</label>
+<input type="number" id="num">
+
+<button onclick="generate()">Generate</button>
+<div id="generate-numbers"></div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Even</th>
+    <th>Odd</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+
+<script>
+  /*
+  Create a website whereby clicking the 'Generate' button, n random numbers entered via an input field will be displayed on the screen.
+Then, write down the number of even and odd numbers in a table. Color the column with more numbers green and the other red.
+If the number of even and odd numbers is the same, color both columns blue.
+   */
+
+  function generate() {
+    let numbers = document.getElementById("num").value;
+
+    let result = '';
+    let even = 0;
+    let odd = 0;
+    for (let i = 0; i < numbers; i++) {
+      let num = Math.floor(Math.random() * 100);
+
+      if (num % 2 === 0) {
+        even++;
+      } else {
+        odd++;
+      }
+
+      result += num + " ";
+    }
+
+    let div = document.getElementById("generate-numbers");
+    div.innerHTML = result;
+
+    let tbody = document.querySelector("tbody");
+
+    tbody.innerHTML = `
+    <tr>
+        <td id="even">${even}</td>
+        <td id="odd">${odd}</td>
+    </tr>
+    `
+    let tdEven = document.getElementById("even");
+    let tdOdd = document.getElementById("odd");
+    if (even > odd) {
+      tdEven.style.backgroundColor = "green";
+      tdOdd.style.backgroundColor = "red";
+    } else if (odd > even) {
+      tdEven.style.backgroundColor = "green";
+      tdOdd.style.backgroundColor = "red";
+    } else {
+      tdEven.style.backgroundColor = "cyan";
+      tdOdd.style.backgroundColor = "cyan";
+    }
+  }
+
+</script>
+
+</body>
+</html>

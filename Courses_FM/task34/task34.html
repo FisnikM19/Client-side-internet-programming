@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    th, td {
+      border: 1px solid black;
+      padding: 10px;
+      width: 300px;
+      text-align: center;
+    }
+    table {
+      margin: 3%;
+    }
+  </style>
+</head>
+<body>
+
+<div id="form">
+  <label for="sender">Sender:</label>
+  <input type="text" id="sender">
+
+  <label for="receiver">Receiver:</label>
+  <input type="text" id="receiver">
+
+  <label for="amount">Amount:</label>
+  <input type="number" id="amount">
+
+  <button onclick="formSubmit()">Submit</button>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Balance</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="name">Marta</td>
+    <td>100</td>
+  </tr>
+  <tr>
+    <td class="name">Marko</td>
+    <td>150</td>
+  </tr>
+  <tr>
+    <td class="name">Igor</td>
+    <td>200</td>
+  </tr>
+  <tr>
+    <td class="name">Iva</td>
+    <td>250</td>
+  </tr>
+  <tr>
+    <td class="name">Ana</td>
+    <td>300</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  /*
+  Create a web page that simulates bank transactions between friends.
+  The page should display a table containing the names of five individuals and their current bank balances.
+  There should be three input fields: one to specify the sender's name, another to specify the receiver's name, and a third to enter the transaction amount.
+  When the user fills out these inputs and clicks the "Submit" button, the application should update the table accordingly.
+  The sender's balance should decrease by the specified amount, and the receiver's balance should increase by the same amount.
+   */
+
+
+  function formSubmit() {
+    let sender = document.getElementById("sender").value.trim();
+    let receiver = document.getElementById("receiver").value.trim();
+    let amount = parseInt(document.getElementById("amount").value);
+
+    if (!sender || !receiver || isNaN(amount) || amount <= 0) {
+      alert('All fields must be filled with valid values! Amount must be greater than 0.');
+      return;
+    }
+
+    // Validation: Sender and receiver must be different
+    if (sender === receiver) {
+      alert('Sender and receiver cannot be the same person!');
+      return;
+    }
+
+    let users = document.querySelectorAll(".name");
+    let senderRow = null;
+    let receiverRow = null;
+
+    // Find sender and receiver rows
+    for (let user of users) {
+      if (user.innerText === sender) {
+        senderRow = user.parentNode;
+      }
+      if (user.innerText === receiver) {
+        receiverRow = user.parentNode;
+      }
+    }
+
+    // Validation: Check if sender and receiver exist
+    if (!senderRow) {
+      alert(`Sender "${sender}" not found!`);
+      return;
+    }
+    if (!receiverRow) {
+      alert(`Receiver "${receiver}" not found!`);
+      return;
+    }
+
+    // Validation: Check if sender has sufficient balance
+    let senderBalanceCell = senderRow.children[1];
+    let senderBalance = parseInt(senderBalanceCell.innerText);
+    if (senderBalance < amount) {
+      alert(`Sender "${sender}" does not have sufficient balance for this transaction!`);
+      return;
+    }
+
+    // Perform the transaction
+    let receiverBalanceCell = receiverRow.children[1];
+    senderBalanceCell.innerText = senderBalance - amount; // Deduct from sender
+    receiverBalanceCell.innerText = parseInt(receiverBalanceCell.innerText) + amount; // Add to receiver
+
+    alert(`Transaction successful! ${amount}$ transferred from ${sender} to ${receiver}`);
+  }
+
+
+</script>
+
+</body>
+</html>

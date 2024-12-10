@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+    Create a web page where a sentence can be entered from the keyboard.
+For every two consecutive words, check whether the first word ends with the same substring that the second word begins with.
+If the substrings match, the sentence should be modified so that the concatenated version of those words is recorded in their place.
+
+Example input:
+Hello, this IS an Example example !?
+
+Output:
+Hello, this an Example !?
+     */
+
+    let sentence = prompt("Enter a sentence:");
+
+    let tokens = sentence.split(" ");
+
+    for (let i = 0; i < tokens.length; i++) {
+        let p = tokens[i].split("");
+
+        for (let j = 0; j < p.length; j++) {
+            let result = '';
+            for (let k = j; k < p.length; k++) {
+                result += p[k];
+                if (i !== tokens.length - 1 && result.toLowerCase() === tokens[i+1].toLowerCase()) {
+                    tokens[i+1] = "";
+                    break;
+                }
+            }
+            console.log(result);
+        }
+    }
+
+    // Remove empty strings caused by concatenation
+    tokens = tokens.filter(word => word !== "");
+
+    alert(tokens.join(" "));
+
+    /* ChatGPT code
+
+    let sentence = prompt("Enter a sentence:");
+
+    let tokens = sentence.split(" ");
+
+    for (let i = 0; i < tokens.length - 1; i++) {
+        let word1 = tokens[i];
+        let word2 = tokens[i + 1];
+
+        for (let j = 1; j <= word1.length; j++) {
+            let endSubstring = word1.slice(-j).toLowerCase();
+            let startSubstring = word2.slice(0, j).toLowerCase();
+
+            if (endSubstring === startSubstring) {
+                tokens[i] = word1 + word2.slice(j); // Concatenate overlapping parts
+                tokens[i + 1] = ""; // Mark the next word for removal
+                break;
+            }
+        }
+    }
+
+    // Remove empty strings caused by concatenation
+    tokens = tokens.filter(word => word !== "");
+
+    console.log(tokens.join(" ")); // Output the final sentence
+     */
+
+</script>
+
+</body>
+</html>

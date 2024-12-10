@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+    Enter the teams and their code until @ is entered.
+Then enter the codes of two teams and the result of the match they played.
+The results are entered in the format:code1:code2;team1Goals:team2Goals
+Entering results is terminated with the @ sign.
+Print all the teams in the format: code team [goals] and using array functions, calculate the total number of goals.
+
+Example input:
+
+Real Madrid:1
+Barcelona:2
+Manchester United:3
+@
+1:2;0:4
+2:3;1:2
+@
+
+Output:
+1 Real Madrid 0
+2 Barcelona 4,1
+3 Manchester United 2
+7
+     */
+    let teams = new Map(); // Store teams with their codes
+    let goals = new Map(); // Store goals for each team
+    let totalGoals = 0;    // Store the total number of goals
+
+    // Input teams and their codes
+    while (true) {
+        let input = prompt("Enter the team and its code (e.g., Real Madrid:1). Type '@' to stop.");
+        if (input === '@') break;
+
+        let [team, code] = input.split(":");
+        if (!team || !code) {
+            alert("Invalid format. Please enter in the format: Team:Code");
+            continue;
+        }
+
+        teams.set(code.trim(), team.trim());
+        goals.set(code.trim(), 0); // Initialize goals for each team to 0
+    }
+
+    // Input match results
+    while (true) {
+        let input = prompt("Enter results (format: code1:code2;team1Goals:team2Goals). Type '@' to stop.");
+        if (input === '@') break;
+
+        let [codes, scores] = input.split(";");
+        if (!codes || !scores) {
+            alert("Invalid format. Please use the format: code1:code2;team1Goals:team2Goals");
+            continue;
+        }
+
+        let [code1, code2] = codes.split(":");
+        let [goals1, goals2] = scores.split(":").map(Number);
+
+        if (!code1 || !code2 || isNaN(goals1) || isNaN(goals2)) {
+            alert("Invalid input! Please ensure codes and goals are properly formatted.");
+            continue;
+        }
+
+        // Update goals for each team
+        goals.set(code1, goals.get(code1) + goals1);
+        goals.set(code2, goals.get(code2) + goals2);
+
+        // Update total goals
+        totalGoals += goals1 + goals2;
+    }
+
+    // Output the results
+    document.write("<h3>Teams and Goals:</h3>");
+    teams.forEach((team, code) => {
+        document.write(`${code} ${team} [${goals.get(code)}]<br>`);
+    });
+    document.write(`<h3>Total Goals: ${totalGoals}</h3>`);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    table {
+      border: 2px solid;
+      margin: 5%;
+      padding: 20px;
+    }
+
+    th, td {
+      width: 300px;
+      text-align: center;
+    }
+
+    button {
+      padding: 15px 20px;
+      margin: 0 5%;
+      cursor: pointer;
+    }
+    #passed {
+      background: darkgreen;
+      color: white;
+      border: 1px solid green;
+    }
+    #failed {
+      background: darkred;
+      color: white;
+      border: 1px solid darkred;
+    }
+    #clear {
+      background: burlywood;
+      border: 1px solid;
+    }
+    #passed:hover {
+      background: green;
+    }
+    #failed:hover {
+      background: red;
+    }
+    #clear:hover {
+      background: antiquewhite;
+    }
+
+  </style>
+</head>
+<body>
+
+<table>
+  <thead>
+  <tr>
+    <th>Number</th>
+    <th>Name</th>
+    <th>Last Name</th>
+    <th>Points</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>1</td>
+    <td>John</td>
+    <td>Wall</td>
+    <td class="points">85</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Alex</td>
+    <td>Pereira</td>
+    <td class="points">92</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Max</td>
+    <td>Powell</td>
+    <td class="points">7</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Fred</td>
+    <td>Caruso</td>
+    <td class="points">32</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Joey</td>
+    <td>Gustavo</td>
+    <td class="points">20</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Kyle</td>
+    <td>Walker</td>
+    <td class="points">80</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Cole</td>
+    <td>Palmer</td>
+    <td class="points">90</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Tom</td>
+    <td>Bradley</td>
+    <td class="points">76</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>Jack</td>
+    <td>Henderson</td>
+    <td class="points">43</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>Frank</td>
+    <td>Olivier</td>
+    <td class="points">83</td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="buttons">
+  <button id="passed" onclick="passed()">PASSED</button>
+  <button id="failed" onclick="failed()">FAILED</button>
+  <button id="clear" onclick="vanish()">CLEAR</button>
+</div>
+
+<script>
+  /*
+  Write an application where a table of students will be displayed on the screen.
+  For each student, their name, surname, and the number of points scored on the test are known. Your task is to implement three buttons:
+
+PASSED button: Colors the rows in green of students who scored 50 or more than 50 points.
+FAILED button: Colors the rows in red of students who scored less than 50 points.
+CLEAR button: Resets the table to its original state when clicked.
+Additionally, when the PASSED and FAILED buttons are clicked, the number of students who passed or failed the exam should also be displayed.
+   */
+
+  let countPassed = 0;
+  let countFailed = 0;
+  function passed() {
+    let points = document.querySelectorAll(".points");
+
+    for (let point of points) {
+      let p = parseInt(point.innerText);
+
+      if (p >= 50) {
+        let tr = point.parentNode;
+        tr.style.backgroundColor = "darkgreen";
+        tr.style.color = "white";
+        countPassed++;
+      }
+    }
+
+    let pass = document.getElementById("passed");
+    pass.innerHTML = `PASSED ${countPassed}`;
+    countPassed = 0;
+  }
+
+  function failed() {
+    let points = document.querySelectorAll(".points");
+
+    for (let point of points) {
+      let p = parseInt(point.innerText);
+
+      if (p < 50) {
+        let tr = point.parentNode;
+        tr.style.backgroundColor = "darkred";
+        tr.style.color = "white";
+        countFailed++;
+      }
+    }
+    let fail = document.getElementById("failed");
+    fail.innerHTML = `FAILED ${countFailed}`;
+    countFailed = 0;
+  }
+
+  function vanish() {
+    let trs = document.getElementsByTagName("tr");
+
+    for (let tr of trs) {
+      tr.style.backgroundColor = "white";
+      tr.style.color = "black";
+    }
+    let pass = document.getElementById("passed");
+    let fail = document.getElementById("failed");
+
+    pass.innerHTML = "PASSED";
+    fail.innerHTML = "FAILED";
+    countPassed = 0;
+    countFailed = 0;
+  }
+
+</script>
+</body>
+</html>

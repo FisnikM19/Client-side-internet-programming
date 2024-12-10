@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+Write a program that will allow dividing a string according to two characters. Through a prompt window, enter the two characters, separated by ;
+Through another prompt window, enter a string.
+Display all received strings on the screen.
+Input:
+Enter two characters:
+a;e
+Enter the text:
+reshavame ipks laboratorski vezhbi
+
+Output:
+r
+sh
+v
+m
+ipks l
+bor
+toriski v
+zhbi
+     */
+
+    let input = prompt("Enter two characters separated by a semicolon (e.g., a;e):");
+
+    if (!input || !input.includes(';')) {
+        alert('Invalid input! Please provide two characters separated by a semicolon.');
+    } else {
+        let chars = input.split(";");
+
+        if (chars.length !== 2 || chars[0].length !== 1 || chars[1].length !== 1) {
+            alert("Invalid input! Make sure to enter exactly two single characters separated by a semicolon.");
+        } else {
+            let text = prompt("Enter the text:");
+
+            if (!text) {
+                alert("Text cannot be empty!");
+            } else {
+                let result = '';
+                for (let i = 0; i < text.length; i++) {
+                    if (text[i] === chars[0] || text[i] === chars[1]) {
+                        document.write(result + "<br>");
+                        result = '';
+                    } else {
+                        result += text[i];
+                    }
+                }
+                document.write(result + "<br>");
+            }
+        }
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+ A web page should be created where a mobile number is read from the keyboard (via prompt) in the following format XXYYYZZZ (e.g., 071234567).
+ The program should print it in the format XXX/YYY-ZZZ (e.g., 071/234-567).
+
+Additionally, it should also print the name of the operator. (070/071/072 - Telekom, 073 - MTEL, 074 - Telekabel, 075/076/077/078 - A1, 079 - LajkaMobile).
+   */
+
+  let phone = prompt("Enter a phone number: (XXYYYZZZ) 8-digits");
+
+  if (!/\d{8}$/.test(phone)){ // Checks if the input has exactly 8 numeric characters
+    alert('Invalid number. Please enter exactly 8 digits with no spaces or special characters.');
+  } else {
+    let format = phone.slice(0, 2) + "/" + phone.slice(2, 5) + "-" + phone.slice(5, 8);
+    console.log(format);
+
+    let prefix = phone.slice(0, 2);
+    let tel;
+
+    switch (prefix) {
+      case '70':
+      case '71':
+      case '72':
+        tel = 'Telekom';
+        break;
+      case '73':
+        tel = 'MTEL';
+        break;
+      case '74':
+        tel = 'Telekabel';
+        break;
+      case '75':
+      case '76':
+      case '77':
+      case '78':
+        tel = 'A1';
+        break;
+      case '79':
+        tel = 'LajkaMobile';
+        break;
+      default:
+        tel = 'Unknown operator';
+        break;
+    }
+
+    alert(`0${format} - ${tel}`);
+  }
+
+
+</script>
+
+</body>
+</html>

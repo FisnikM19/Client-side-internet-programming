@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+Write a program in which 5 three-digit numbers are entered via the keyboard.
+Check if all entered data are three-digit numbers, if they are not, print an appropriate message.
+In an alert window, display the number with the largest sum of digits.
+   */
+
+  function sumOfDigits(num) {
+    let sum = 0;
+    while (num > 0) {
+      sum += num % 10;
+      num = Math.floor(num / 10);
+    }
+
+    return sum;
+  }
+
+  let numbers = [];
+  let isValid = true;
+
+  for (let i = 1; i <= 5; i++) {
+    let input = parseInt(prompt(`Enter number ${i}:`));
+    if (isNaN(input) || input < 100 || input > 999) {
+      alert("All numbers must be three-digit integers!");
+      isValid = false;
+      break;
+    }
+    numbers.push(input);
+  }
+
+  if (isValid) {
+    let maxSum = 0;
+    let maxNum;
+    for (let num of numbers) {
+      let sum = sumOfDigits(num);
+      if (sum > maxSum) {
+        maxSum = sum;
+        maxNum = num;
+      }
+    }
+
+    alert(`The number with the largest sum of digits is: ${maxNum}`);
+  }
+
+</script>
+
+</body>
+</html>

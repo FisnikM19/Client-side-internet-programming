@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+  Write a program in which the user, through a prompt, enters the number of books needed.
+  After that, they need to enter the properties of each book: title (string), author (string), and alreadyRead (a boolean indicating whether the book has been read or not).
+  An array of objects should be created, where each object represents a single book.
+  The program should then iterate through all the objects in the array,
+  and for each object, print the title of the book, the author, and, based on whether it has been read or not, display the appropriate message.
+  Additionally, the books should be sorted by the author's name.
+   */
+
+  let books = parseInt(prompt("Enter the number of books you want to add:"));
+
+  let obj = [];
+
+  for (let i = 0; i < books; i++) {
+    let title = prompt("Enter the title of book:");
+    let author = prompt("Enter the author of book:");
+    let alreadyRead = confirm("Have you already read this book? (Ok for Yes, Cancel for No)");
+
+
+    if (title && author) {
+      obj.push({title, author, alreadyRead});
+    } else {
+      alert("Put the title and author's name!");
+    }
+
+  }
+
+  obj.sort((a, b) => a.author.localeCompare(b.author));
+
+  for (let o of obj) {
+    if (o.alreadyRead) {
+      document.write(`You have read "<strong>${o.title}</strong>" by ${o.author} <br>`);
+    } else {
+      document.write(`You still need to read it "<strong>${o.title}</strong>" by ${o.author} <br>`);
+    }
+  }
+
+
+
+</script>
+
+</body>
+</html>

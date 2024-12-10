@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  /*
+Numbers are entered through the keyboard until a character is entered.
+After entering a character, display all even negative numbers entered on the screen.
+   */
+
+  let numbers = [];
+  while (true) {
+    let input = parseInt(prompt("Enter a number:"));
+
+    if (isNaN(input)) {
+      break;
+    } else {
+      if (input % 2 === 0 && input < 0) {
+        numbers.push(input);
+      }
+    }
+  }
+
+  for (let n of numbers) {
+    document.write(n + "<br>");
+  }
+  document.write(`Total: ${numbers.length}`);
+
+</script>
+
+</body>
+</html>

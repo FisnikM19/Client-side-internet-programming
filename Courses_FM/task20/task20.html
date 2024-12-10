@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+    Write a program where the user enters words separated by ";". The program should check which words are palindromes.
+    In the end, it should print them out and state how many words there are and how many of them are palindromes.
+
+    Example:
+    Input:
+    Enter the words separated by (;)
+    ana;banana;anavolimilovana;marko;zharko
+
+    Output:
+    From 5 words, 2 are palindromes:
+    ana
+    anavolimilovana
+     */
+
+    let words = prompt("Enter the words separated by (;)");
+
+    words = words.split(";");
+
+    let palindromes = [];
+
+    for (let word of words) {
+        let reverse_word = word.split('').reverse().join('');
+
+        if (reverse_word === word) {
+            palindromes.push(word);
+        }
+    }
+
+    document.write(`From ${words.length} words, ${palindromes.length} are palindromes: <br>`);
+    while (palindromes.length !== 0) {
+        document.write("<h3>" + palindromes.shift() + "</h3>");
+    }
+</script>
+
+</body>
+</html>

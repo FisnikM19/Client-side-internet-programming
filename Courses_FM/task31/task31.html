@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+   .card p {
+     border: 1px solid #ccc;
+     width: 50px;
+     padding: 30px;
+     text-align: center;
+     border-radius: 10px;
+   }
+
+   .card {
+     display: flex;
+     justify-content: space-evenly;
+     align-items: center;
+   }
+
+
+
+  </style>
+</head>
+<body>
+
+<h1>Random Number: <span id="random"></span></h1>
+
+<button onclick="generate()">Generate Random Number</button>
+
+<div class="cards">
+  <div class="card">
+    <p>4</p>
+    <p>23</p>
+    <p>7</p>
+    <p>5</p>
+    <p>21</p>
+  </div>
+  <div class="card">
+    <p>3</p>
+    <p>27</p>
+    <p>11</p>
+    <p>8</p>
+    <p>12</p>
+  </div>
+  <div class="card">
+    <p>9</p>
+    <p>1</p>
+    <p>16</p>
+    <p>20</p>
+    <p>18</p>
+  </div>
+  <div class="card">
+    <p>2</p>
+    <p>6</p>
+    <p>13</p>
+    <p>15</p>
+    <p>24</p>
+  </div>
+</div>
+
+<script>
+  /*
+  Create a web page that highlights specific cards based on a randomly generated number.
+  The page should include a button that, when clicked, generates a random number between 1 and 10.
+  There should be a set of cards, each displaying a number. Once the random number is generated,
+  the program should check each card and determine whether its number is divisible by the random number.
+   Cards that meet this condition should be highlighted with a distinct background color.
+   */
+
+  function generate() {
+    let random = Math.floor(Math.random() * 10) + 1;
+
+    let rand = document.getElementById("random");
+    rand.innerHTML = `${random}`;
+
+    let ps = document.getElementsByTagName("p");
+
+    for (let p of ps) {
+      p.style.backgroundColor = "white";
+    }
+
+    for (let p of ps) {
+      if (p.innerText % random === 0) {
+        p.style.backgroundColor = "purple";
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
