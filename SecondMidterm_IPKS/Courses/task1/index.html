@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plane Shooting Game</title>
+</head>
+<body>
+
+<div>
+    <button onclick="moveUp()">Up</button>
+    <button onclick="moveDown()">Down</button>
+    <button onclick="shoot()">Shoot</button>
+</div>
+
+<img src="plane.png" alt="plane" id="plane" style="width: 150px; position: absolute; top: 0; left: 100px;">
+
+<img src="alien.png" alt="alien" id="alien" style="width: 100px;">
+
+<script>
+    let alien = document.getElementById("alien");
+    let winHeight = window.innerHeight;
+    let winWidth = window.innerWidth;
+
+    // Randomly position the alien
+    alien.style.position = 'absolute';
+    alien.style.top = `${Math.floor(Math.random() * (winHeight - 200))}px`;
+    alien.style.left = `${Math.floor(Math.random() * (winWidth - 200))}px`;
+
+    let plane = document.getElementById('plane');
+    plane.style.position = 'absolute';
+    plane.style.top = '0px'; // Initial position for the plane
+
+    // Move the plane down
+    function moveDown() {
+        let currentTop = parseInt(plane.style.top) || 0;
+        plane.style.top = `${currentTop + 10}px`;
+    }
+
+    // Move the plane up
+    function moveUp() {
+        let currentTop = parseInt(plane.style.top) || 0;
+        plane.style.top = `${currentTop - 10}px`;
+    }
+
+    // Shoot a bullet
+    function shoot() {
+        let bullet = document.createElement("div"); // Create a bullet
+        bullet.style.position = "absolute";
+        bullet.style.width = "10px";
+        bullet.style.height = "5px";
+        bullet.style.backgroundColor = "red";
+        bullet.style.top = plane.style.top; // Match the plane's Y position
+        bullet.style.left = "250px"; // Start from just to the right of the plane
+        document.body.appendChild(bullet);
+
+        // Move the bullet
+        let bulletInterval = setInterval(() => {
+            let currentLeft = parseInt(bullet.style.left) || 0;
+            bullet.style.left = `${currentLeft + 10}px`; // Move the bullet to the right
+
+            // Check for collision with the alien
+            let bulletTop = parseInt(bullet.style.top);
+            let alienTop = parseInt(alien.style.top);
+            let alienLeft = parseInt(alien.style.left);
+            if (Math.abs(bulletTop - alienTop) < 50 && currentLeft - alienLeft >= 5) { // Check if Y-coordinates are close
+                document.body.removeChild(alien); // Remove the alien
+                clearInterval(bulletInterval); // Stop the bullet
+                document.body.removeChild(bullet); // Remove the bullet
+                alert("Hit! Alien destroyed!");
+            }
+
+            // Remove bullet if it moves off-screen
+            if (currentLeft > winWidth) {
+                clearInterval(bulletInterval);
+                document.body.removeChild(bullet);
+            }
+        }, 20); // Move the bullet every 20ms
+    }
+</script>
+
+</body>
+</html>

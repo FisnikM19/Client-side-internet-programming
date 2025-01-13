@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .forms {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="form">
+    <div class="forms">
+        <div>
+            <label for="red">Red:
+                <input type="number" id="red" min="1" max="255" value="0">
+                (0-255)
+            </label>
+        </div>
+        <div>
+            <label for="green">Green:
+                <input type="number" id="green" min="1" max="255" value="0">
+                (0-255)
+            </label>
+        </div>
+        <div>
+            <label for="blue">Blue:
+                <input type="number" id="blue" min="1" max="255" value="0">
+                (0-255)
+            </label>
+        </div>
+    </div>
+
+    <div class="forms">
+        <div>
+            <input type="radio" id="start" name="options" value="Start" checked>
+            <label for="start">Start</label>
+        </div>
+        <div>
+            <input type="radio" id="end" name="options" value="End">
+            <label for="end">End</label>
+        </div>
+    </div>
+
+    <div class="forms">
+        <label for="text">Text:</label>
+        <input type="text" id="text" width="500px">
+    </div>
+
+    <div class="forms">
+        <button onclick="addText()">Add</button>
+        <button onclick="deleteText()">Delete</button>
+    </div>
+</div>
+
+<div id="content">
+
+</div>
+
+<script>
+    function addText() {
+        let colorRed = document.getElementById('red').value;
+        let colorGreen = document.getElementById('green').value;
+        let colorBlue = document.getElementById('blue').value;
+
+
+        let start = document.getElementById('start');
+        let text = document.getElementById('text');
+        let div = document.getElementById('content');
+
+
+        let paragraph = document.createElement('p');
+
+        paragraph.style.color = `rgb(${colorRed}, ${colorGreen}, ${colorBlue})`;
+        paragraph.textContent = text.value;
+
+        if (start.checked === true) {
+
+            if (div.hasChildNodes()) {
+                div.insertBefore(paragraph, div.firstChild);
+            } else {
+                div.appendChild(paragraph);
+            }
+
+        } else {
+            div.appendChild(paragraph);
+        }
+        text.value = '';
+    }
+
+    function deleteText() {
+        let div = document.getElementById('content');
+
+        if (div.hasChildNodes()) {
+            let start = document.getElementById('start');
+
+            if (start.checked === true) {
+                let firstChild = div.firstChild;
+
+                div.removeChild(firstChild);
+            } else {
+                let lastChild = div.lastChild;
+                div.removeChild(lastChild);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

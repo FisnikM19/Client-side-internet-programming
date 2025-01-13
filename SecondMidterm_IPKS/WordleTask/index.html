@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .box {
+            border: black solid 3px;
+            height: 120px;
+            width: 120px;
+            font-size: 120px;
+            text-align: center;
+            margin: 2px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    const data = '["bukva","jazik","vokal","misla","tablo"]';
+    let newData = JSON.parse(data);
+
+    let selectedWord = random(newData);
+    console.log(selectedWord);
+    let count = 0; // Ensure this counter keeps incrementing for unique IDs
+    newLineOfInputs();
+
+    function random(array) {
+        let i = Math.floor((Math.random() * array.length));
+        return array[i];
+    }
+
+    function newLineOfInputs() {
+        let newDiv = document.createElement('div');
+        document.body.appendChild(newDiv);
+
+        for (let i = 0; i < 5; i++) {
+            let createInput = document.createElement('input');
+            createInput.setAttribute('class', 'box');
+            createInput.setAttribute('id', 'num' + count); // Use unique ID
+            createInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    checkTheInputs(count - 5); // Pass the starting ID of the current line
+                }
+            });
+            newDiv.appendChild(createInput);
+            count++; // Increment count to ensure unique IDs
+        }
+    }
+
+    function checkTheInputs(startId) {
+        let check = true;
+
+        for (let i = 0; i < 5; i++) {
+            let inputById = document.getElementById('num' + (startId + i));
+            if (inputById.value.length > 1 || inputById.value.length < 1) {
+                alert('"Only one letter per input, try again"');
+                check = false;
+                break;
+            }
+        }
+
+        if (check === true) {
+            checkWord(startId);
+        }
+    }
+
+    function checkWord(startId) {
+        let collectWord = "";
+        for (let i = 0; i < 5; i++) {
+            let inputById = document.getElementById('num' + (startId + i));
+            collectWord += inputById.value;
+        }
+
+        for (let i = 0; i < 5; i++) {
+            let inputById = document.getElementById('num' + (startId + i));
+            inputById.style.color = 'gray';
+            inputById.setAttribute('disabled', 'true');
+        }
+
+        if (collectWord === selectedWord) {
+            for (let i = 0; i < 5; i++) {
+                let inputById = document.getElementById('num' + (startId + i));
+                inputById.style.backgroundColor = 'green';
+                document.body.style.backgroundColor = 'green';
+                $("#num" + (startId + i)).fadeOut(10);
+                $("#num" + (startId + i)).fadeIn(1100);
+            }
+        } else {
+            for (let i = 0; i < 5; i++) {
+                let inputById = document.getElementById('num' + (startId + i));
+                for (let j = 0; j < 5; j++) {
+                    if (i !== j && collectWord[i] === selectedWord[j]) {
+                        inputById.style.backgroundColor = 'yellow';
+                        $("#num" + (startId + i)).fadeOut(10);
+                        $("#num" + (startId + i)).fadeIn(1100);
+                    }
+                    if (i === j && collectWord[i] === selectedWord[j]) {
+                        inputById.style.backgroundColor = 'green';
+                        $("#num" + (startId + i)).fadeOut(10);
+                        $("#num" + (startId + i)).fadeIn(1100);
+                    }
+                }
+            }
+            newLineOfInputs(); // Generate new line of inputs for the next attempt
+        }
+    }
+</script>
+
+</body>
+</html>

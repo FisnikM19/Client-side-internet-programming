@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Watch List</title>
+    <style>
+        div {
+            padding: 5px;
+        }
+
+        label {
+            display: inline-block;
+            width: 200px;
+        }
+
+        #cards {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #cards div {
+            border: 3px solid black;
+            text-align: center;
+            margin: 5px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+<!--  SIMPLIFICATION OF index.html-->
+
+<h1>Watch List</h1>
+<h2>Add a Movie</h2>
+
+<div>
+    <label for="title">Title:</label>
+    <input type="text" id="title">
+</div>
+<div>
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre">
+</div>
+<div>
+    <label>Status:</label>
+    <input type="radio" id="watched" name="watch" value="watched" checked> Watched
+    <input type="radio" id="toWatch" name="watch" value="toWatch"> To Watch
+</div>
+<div>
+    <label for="rating">Rating:</label>
+    <input type="number" id="rating" placeholder="Rate out of 10" min="0" max="10">
+</div>
+<div>
+    <button onclick="addMovie()">Add Movie</button>
+</div>
+
+<hr>
+
+<h2>Your Movies:</h2>
+
+<div>
+    <label for="filter">Filter by Status:</label>
+    <select name="filter" id="filter">
+        <option value="viewAll" selected>View All</option>
+        <option value="watched">Watched</option>
+        <option value="toWatch">To Watch</option>
+    </select>
+    <button onclick="filterMovies()">Filter</button>
+</div>
+
+<div>
+    <label for="search">Search by Genre:</label>
+    <input type="text" id="search">
+    <button onclick="searchMovies()">Search</button>
+    <span id="found"></span>
+</div>
+
+<div id="cards"></div>
+
+<script>
+    let movies = [];
+
+    function addMovie() {
+        const title = document.getElementById('title').value.trim();
+        const genre = document.getElementById('genre').value.trim();
+        const status = document.querySelector('input[name="watch"]:checked').value;
+        const rating = parseInt(document.getElementById('rating').value);
+
+        if (!title || !genre || (status === 'watched' && (isNaN(rating) || rating < 0 || rating > 10))) {
+            alert('Please fill all required fields correctly.');
+            return;
+        }
+
+        movies.push({
+            title,
+            genre,
+            status,
+            rating: status === 'watched' ? rating : null
+        });
+
+        renderMovies();
+        clearInputs();
+    }
+
+    function renderMovies(filteredMovies = movies) {
+        const cardsContainer = document.getElementById('cards');
+        cardsContainer.innerHTML = '';
+
+        filteredMovies.forEach((movie, index) => {
+            const movieCard = document.createElement('div');
+            movieCard.innerHTML = `
+                <p><strong>${movie.title}</strong></p>
+                <p>${movie.genre}</p>
+                ${movie.status === 'watched'
+                    ? `<p>Rating: ${movie.rating}/10</p>`
+                    : `<button onclick="removeMovie(${index})">Remove</button>`}
+            `;
+            movieCard.className = movie.status;
+            cardsContainer.appendChild(movieCard);
+        });
+    }
+
+    function clearInputs() {
+        document.getElementById('title').value = '';
+        document.getElementById('genre').value = '';
+        document.getElementById('rating').value = '';
+        document.getElementById('watched').checked = true;
+    }
+
+    function filterMovies() {
+        const filter = document.getElementById('filter').value;
+
+        let filteredMovies = movies;
+        if (filter === 'watched') {
+            filteredMovies = movies.filter(movie => movie.status === 'watched');
+            filteredMovies.sort((a, b) => b.rating - a.rating);
+        } else if (filter === 'toWatch') {
+            filteredMovies = movies.filter(movie => movie.status === 'toWatch');
+        }
+
+        renderMovies(filteredMovies);
+        document.getElementById('found').textContent = '';
+    }
+
+    function searchMovies() {
+        const searchGenre = document.getElementById('search').value.trim().toLowerCase();
+        if (!searchGenre) return;
+
+        const filteredMovies = movies.filter(movie => movie.genre.toLowerCase() === searchGenre);
+        renderMovies(filteredMovies);
+
+        const count = filteredMovies.length;
+        document.getElementById('found').textContent = `${count} ${searchGenre} movie(s) found.`;
+    }
+
+    function removeMovie(index) {
+        movies.splice(index, 1);
+        renderMovies();
+    }
+</script>
+
+</body>
+</html>

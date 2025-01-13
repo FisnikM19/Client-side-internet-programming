@@ -1,0 +1,3 @@
+Create a web page for budget tracking where the user can input a category and an amount of money.
+By clicking the add button, this information is saved and added to a list on screen.
+Additionally create a button that displays this information via a pie chart.

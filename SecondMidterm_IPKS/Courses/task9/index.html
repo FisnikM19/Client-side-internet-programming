@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Falling Squares</title>
+  <script src="anime.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden; /* Prevent scrollbars */
+    }
+    header {
+      text-align: center;
+      margin: 20px 0;
+    }
+    section {
+      position: relative;
+      height: 100vh;
+      background-color: #f3f3f3;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Falling and Fading Squares</h1>
+  <div>
+    <button onclick="generateSquares()">Generate Squares</button>
+    <button onclick="resetSquares()">Reset</button>
+  </div>
+</header>
+
+<section id="squares"></section>
+
+<script>
+  function generateSquares() {
+    const section = document.getElementById('squares');
+    const winWidth = window.innerWidth;
+
+    let animeObj = anime.timeline({
+      loop:false,
+      easing: 'easeInQuad',
+    });
+
+    for (let i = 0; i < 10; i++) {
+
+      const square = document.createElement('div');
+      square.style.width = '40px';
+      square.style.height = '40px';
+      square.style.position = 'absolute';
+      square.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+      square.style.left = `${Math.random() * (winWidth - 40)}px`;
+      square.style.top = '0px';
+      square.style.opacity = '1';
+
+      section.appendChild(square);
+
+
+      animeObj.add({
+        targets: square,
+        translateY: window.innerHeight - 40,
+        opacity: 0,
+        duration: 3000,
+        complete: () => {
+          square.remove(); // Remove square after animation
+        }
+      }, i === 0 ? '-=0': '-=2000');
+    }
+  }
+
+  function resetSquares() {
+    // Clear all squares
+    const section = document.getElementById('squares');
+    section.innerHTML = '';
+  }
+</script>
+
+</body>
+</html>

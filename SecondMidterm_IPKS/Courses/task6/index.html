@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<h1>Budget Tracker</h1>
+
+<div id="form">
+  <div>
+    <label for="category">Category:</label>
+    <input type="text" id="category" placeholder="Enter a category">
+  </div>
+  <div>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" placeholder="Enter an amount">
+  </div>
+  <div>
+    <button onclick="addExpenses()">Add expense</button>
+    <button onclick="showChart()">Show Pie Chart</button>
+  </div>
+</div>
+
+<div id="lists">
+  <ul></ul>
+</div>
+
+<div id="chart"></div>
+
+<script>
+  let budgets = [];
+
+  function addExpenses() {
+    let category = document.getElementById('category').value.trim();
+    let amount = parseInt(document.getElementById('amount').value.trim());
+
+    if (!category || isNaN(amount)) {
+      alert('All fields must be filled and valid!');
+      return;
+    }
+
+    // Check if the category already exists in the budgets array
+    let existingBudget = budgets.find(budget => budget.category === category);
+
+    if (existingBudget) {
+      // Update the amount for the existing category
+      existingBudget.amount += amount;
+    } else {
+      // Add a new entry if the category doesn't exist
+      budgets.push({ category, amount });
+    }
+
+    // Re-render the list
+    renderList();
+
+    document.getElementById('category').value = '';
+    document.getElementById('amount').value = '';
+  }
+
+  function renderList() {
+    let list = document.querySelector('ul');
+    list.innerHTML = ''; // Clear the list
+
+    // Loop through budgets and display the updated list
+    budgets.forEach(budget => {
+      list.innerHTML += `<li>${budget.category} - ${budget.amount}$</li>`;
+    });
+  }
+
+
+  function showChart() {
+    let category = budgets.map(budget => budget.category);
+    let amount = budgets.map(budget => budget.amount);
+
+    let data = {
+      values: amount,
+      labels: category,
+      type: 'pie'
+    };
+
+    let layout = {
+      title: 'Expense Distribution'
+    }
+
+    Plotly.newPlot('chart', [data], layout);
+  }
+
+</script>
+</body>
+</html>

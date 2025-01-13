@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="anime.min.js"></script>
+</head>
+<body>
+
+<div id="num">Current number:</div>
+
+<script>
+    let data = '[{"id":1,"numbers":[80,72,49,1,34,81,36,2,13,9,54,93,29,18,52]},{"id":2,"numbers":[68,85,24,7,32,12,88,57,35,11,44,58,91,21,22]},{"id":3,"numbers":[16,5,75,64,28,70,50,55,40,77,23,48,98,67,73]}]';
+    data = JSON.parse(data);
+
+    data.forEach(ticket => {
+        ticket.count = 0;
+
+        let table = document.createElement("table");
+        table.id = `table-${ticket.id}`;
+        table['border'] = '1px solid black';
+        table.style.marginBottom = '10px';
+
+        for (let i = 0; i < 3; i++) {
+            let newRow = table.insertRow();
+            for (let j = 0; j < 5; j++) {
+                let newCell = newRow.insertCell();
+                newCell.innerText = ticket.numbers[5 * i + j];
+
+                newCell.addEventListener('click', function () {
+                    check(newCell, ticket.id);
+                });
+            }
+        }
+
+
+        document.body.appendChild(table);
+    });
+
+    let num = -1;
+
+    function changeNum() {
+        num = Math.trunc(Math.random() * 100);
+        document.getElementById('num').innerText = "Current number: " + num;
+    }
+    //The Math. trunc() static method returns the integer part of a number by removing any fractional digits.
+
+    function check(element, ticketId) {
+        console.log(element.innerText + " " + element + " " + ticketId);
+
+        if (parseInt(element.innerText) !== num || element.style.backgroundColor === 'green') {
+            return;
+        }
+
+        element.style.backgroundColor = 'green';
+
+        let ticket = data.find(t => t.id === ticketId);
+        ticket.count++;
+
+        if (ticket.count === 15) {
+            clearInterval(inter);
+            alert(`Ticket ${ticketId} has all numbers matched!`);
+        }
+    }
+
+    changeNum();
+
+    let inter = setInterval(changeNum, 5000);
+</script>
+
+</body>
+</html>

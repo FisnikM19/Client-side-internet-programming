@@ -1,0 +1,13 @@
+A json string is given, which represents a list of words with five letters each.
+The string should be parsed and a word should be selected at random (10 points).
+Then, five input fields are added to the page via code, which can each receive one letter (10 points).
+The idea is for the user to guess the randomly selected word. When the user enters all five letters,
+an automatic check is made of each of the letters (10 points).
+If the letter from the entered word is in the same position as the same letter from the randomly selected word,
+then the field is colored green (10 points). If the letter from the user's word is in the randomly selected word,
+but is not in the correct position, it is colored yellow (10 points). Otherwise, nothing happens.
+The coloring should be gradual (10 points). If the user does not guess the word,
+five new fields appear for the user to try again (10 points).
+This procedure is repeated until the user guesses the randomly selected word.
+The moment the word is guessed, the game ends, no new fields appear and the background turns green (10 points).
+Below is the style for the input field, an example of a json string, and a view of how the website should look.

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Shape Animations</title>
+  <script src=anime.min.js></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #box {
+      width: 700px;
+      border: 3px solid black;
+      height: 600px;
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    div {
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Color Shape Animations</h1>
+
+<div>
+  <label for="color">Choose a color:</label>
+  <select name="color" id="color" onchange="showCircle()">
+    <option value="none" selected>Select</option>
+    <option value="red">Red</option>
+    <option value="yellow">Yellow</option>
+    <option value="blue">Blue</option>
+  </select>
+</div>
+
+<div>
+  <button id="stop-animation">Stop Animation</button>
+  <button id="reset-animation">Reset</button>
+</div>
+
+<div id="box"></div>
+
+<script>
+  let currentAnimation = null; // Track the current animation
+
+  function showCircle() {
+    const colorCircle = document.getElementById('color').value;
+    const box = document.getElementById('box');
+
+    // Check if a div already exists in the box
+    let div = box.querySelector('div');
+
+    if (!div) {
+      // Create the div only if it doesn't exist
+      div = document.createElement('div');
+      div.style.borderRadius = '50%';
+      div.style.width = '100px';
+      div.style.height = '100px';
+      box.appendChild(div);
+    }
+
+    // Reset any existing animations and styles
+    resetCircle(div);
+
+    // Update the div's background color
+    div.style.backgroundColor = colorCircle;
+
+    // Start a new animation based on the selected color
+    animation(div, colorCircle);
+  }
+
+  function resetCircle(div) {
+    if (currentAnimation) {
+      currentAnimation.pause(); // Stop the current animation
+    }
+
+    // Reset styles to defaults
+    div.style.transform = '';
+    div.style.opacity = '1';
+    div.style.transition = '';
+  }
+
+  function animation(div, color) {
+    if (color === 'red') {
+      currentAnimation = anime({
+        targets: div,
+        scale: [1, 0.5],
+        duration: 1000,
+        direction: 'alternate',
+        loop: true,
+        easing: 'easeInOutQuad',
+      });
+    } else if (color === 'yellow') {
+      currentAnimation = anime({
+        targets: div,
+        opacity: [0, 1],
+        duration: 1000,
+        direction: 'alternate',
+        loop: true,
+        easing: 'easeInOutQuad',
+      });
+    } else if (color === 'blue') {
+      currentAnimation = anime({
+        targets: div,
+        translateY: [-200, 200],
+        duration: 1000,
+        direction: 'alternate',
+        loop: true,
+        easing: 'easeInOutQuad',
+      });
+    }
+
+    // Attach event listeners to stop and reset buttons
+    document.getElementById('stop-animation').onclick = () => {
+      if (currentAnimation) {
+        currentAnimation.pause(); // Stop the animation
+      }
+    };
+
+    document.getElementById('reset-animation').addEventListener('click', () => {
+      if (currentAnimation) {
+        currentAnimation.pause(); // Stop the animation
+        currentAnimation = null; // Clear the animation reference
+      }
+
+      // Remove the div from the box
+      const parent = div.parentNode;
+      parent.removeChild(div);
+    });
+  }
+</script>
+
+</body>
+</html>

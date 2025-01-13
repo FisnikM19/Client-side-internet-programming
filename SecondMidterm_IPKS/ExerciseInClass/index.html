@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="anime.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    #countryFlag {
+      display: block;
+      margin: 10px 0;
+      width: 150px;
+      height: auto;
+      opacity: 0;
+      transform: scale(0) translateX(-100%);
+      border-radius: 0;
+      transition: border-radius 0.5s ease;
+    }
+    #chart {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>COVID-19 Data Dashboard</h1>
+
+<div>
+  <button onclick="visualizeAllCountries()">View all countries</button>
+  <select name="dropdown" id="dropdown" onchange="visualizeSingleCountry(this.value)">
+    <option value="none">Select a country</option>
+  </select>
+</div>
+
+<div>
+  <img src="" alt="Country flag" id="countryFlag" onclick="toggleFlagShape()">
+</div>
+<div id="chart"></div>
+
+<script>
+  let countryData = [];
+  const countryFlag = document.getElementById('countryFlag');
+
+  async function fetchData() {
+    let url = "https://disease.sh/v3/covid-19/countries";
+
+    let response = await fetch(url);
+    countryData = await response.json();
+
+    console.log(countryData);
+
+    populateDropDown();
+    visualizeAllCountries();
+  }
+
+  function populateDropDown() {
+    let countrySelect = document.getElementById('dropdown');
+
+    countryData.forEach((country) => {
+      let option = document.createElement('option');
+      option.value = country.country;
+      option.innerHTML = country.country;
+      countrySelect.appendChild(option);
+    });
+  }
+
+  function visualizeAllCountries() {
+    let name = countryData.map(country => country.country);
+    let cases = countryData.map(country => country.cases);
+    let recovered = countryData.map(country => country.recovered);
+    let deaths = countryData.map(country => country.deaths);
+
+    let trace1 = {
+        x: name,
+        y: cases,
+        type: 'bar',
+        name: 'Total Cases'
+    }
+    let trace2 = {
+        x: name,
+        y: recovered,
+        type: 'bar',
+        name: 'Recovered'
+    }
+    let trace3 = {
+        x: name,
+        y: deaths,
+        type: 'bar',
+        name: 'Deaths'
+    }
+
+
+    let traces = [trace1, trace2, trace3];
+    let layout = {barmode: 'group', title: 'COVID-19 Data for All countries'};
+
+    Plotly.newPlot('chart', traces, layout);
+
+    hideCountryFlag();
+  }
+
+  function visualizeSingleCountry(countryName) {
+    if (!countryName) return;
+
+    let countryObj = countryData.find(country => country.country === countryName);
+    console.log(countryObj);
+
+    let cases = countryObj.cases;
+    let recovered = countryObj.cases;
+    let deaths = countryObj.deaths;
+
+    let trace = {
+      x: ['Total cases', 'Recovered', 'Deaths'],
+      y: [cases, recovered, deaths],
+      name: `${countryName}`,
+      type: 'bar'
+    };
+
+    Plotly.newPlot('chart', [trace]);
+
+    showCountryFlag(countryObj.countryInfo.flag);
+  }
+
+  function showCountryFlag(flagUrl) {
+    countryFlag.src = flagUrl;
+    anime({
+      targets: countryFlag,
+      opacity: [0, 1],
+      translateX: [-100, 0],
+      scale: [0, 1],
+      duration: 1000,
+      easing: 'easeOutElastic(1, .8)',
+    });
+  }
+
+  function hideCountryFlag() {
+    anime({
+      targets: countryFlag,
+      opacity: [1, 0],
+      scale: [1, 0],
+      translateX: [0, -100],
+      duration: 500,
+      easing: 'easeInQuad',
+      complete: () => {
+        countryFlag.src = "";
+      },
+    });
+  }
+
+  let isCircle = false;
+
+  function toggleFlagShape() {
+    isCircle = !isCircle;
+    anime({
+      targets: countryFlag,
+      borderRadius: isCircle ? ['0%', '50%'] : ['50%', '0%'],
+      keyframes: [
+        {scale: 1.2, duration: 500},
+        {scale: 1, duration: 500},
+        {scale: 1.2, duration: 500},
+        {scale: 1, duration: 500},
+      ],
+      duration: 500,
+      easing: 'easeInOutQuad',
+    });
+  }
+
+  fetchData();
+
+</script>
+</body>
+</html>

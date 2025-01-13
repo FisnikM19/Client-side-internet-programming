@@ -1,0 +1,2 @@
+Create a webpage where the user presses two buttons, and a rectangle is generated at a random position on the screen.
+The rectangle appears in such a way that its visibility gradually increases. The first position is always smaller than the second

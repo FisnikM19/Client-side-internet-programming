@@ -1,0 +1,9 @@
+Create a web page where the user has the option to choose between three colors, red, blue and yellow.
+After choosing a color a circle appears on the page which has a different animation depending on the chosen color.
+
+Red - the circle increases and decreases in size.
+Yellow - the circle disappears and reappears.
+Blue - the circle moves up and down.
+
+Additionally on the page there should be two buttons, one for pausing the chosen animation,
+where on click the animation stops and another one for resetting, where on click the circle disappears.

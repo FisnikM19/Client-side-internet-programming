@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <label for="colors">Colors</label> <br>
+    <input type="text" id="colors">
+</div>
+
+<div>
+    <label for="delimiter">Delimiter</label> <br>
+    <input type="text" id="delimiter">
+</div>
+
+<div>
+    <button onclick="draw()">Draw</button>
+</div>
+
+<div id="container"></div>
+
+
+<script>
+
+    function draw() {
+        let delimiter = document.getElementById('delimiter').value.trim();
+        let colors = document.getElementById('colors').value.trim();
+
+        if (!delimiter || !colors) {
+            alert("Please enter both colors and a delimiter.");
+            return;
+        }
+
+        // Split colors into an array
+        let arr = colors.split(delimiter);
+        console.log(arr);
+
+        let container = document.getElementById('container');
+        container.innerHTML = ""; // Clear previous blocks
+
+        for (let i = 0; i < arr.length; i++) {
+            let color = arr[i].trim(); // Remove any extra spaces around color
+
+            // Create a block (div)
+            let block = document.createElement('div');
+            block.style.display = 'inline-block';
+            block.style.width = '100px';
+            block.style.height = '100px';
+            block.style.margin = '10px 0';
+            block.style.backgroundColor = color;
+
+            // Use a regular function to correctly bind `this`
+            block.onclick = function () {
+                removeBlock(this);
+            };
+
+            container.appendChild(block);
+        }
+    }
+
+    function removeBlock(elem) {
+        let container = elem.parentNode;
+        container.removeChild(elem); // Remove the clicked block
+
+        // Update the `colors` input field
+        let children = container.children;
+        let new_text = '';
+
+        for (let i = 0; i < children.length; i++) {
+            if (i > 0) {
+                new_text += ','; // Add delimiter between colors
+            }
+            new_text += children[i].style.backgroundColor;
+        }
+
+        document.getElementById('colors').value = new_text;
+    }
+
+
+</script>
+</body>
+</html>

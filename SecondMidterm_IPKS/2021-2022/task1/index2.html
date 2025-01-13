@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            width: 300px;
+            height: 150px;
+            margin: 10px;
+        }
+
+        button{
+            margin: 10px;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+        }
+
+        #container {
+            position: relative;
+            height: 100vh;;
+            width: 100%;
+        }
+
+        div {
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+<!--  IM TRYING THIS EXERCISE AGAIN!!! I WANT TO DO BY MYSELF-->
+
+<textarea name="textarea" id="textarea"></textarea>
+<br>
+<button id="btn" onclick="showWords()">Show</button>
+
+<div id="container"></div>
+
+<script>
+
+    function countOccurrences(word, array) {
+        return array.filter(w => w === word).length;
+    }
+
+    let winWidth = window.innerWidth;
+    let winHeight = window.innerHeight;
+
+    console.log(winWidth);
+    console.log(winHeight);
+
+   function showWords() {
+       let container = document.getElementById('container');
+       let textarea = document.getElementById('textarea');
+       let btn = document.getElementById('btn');
+       textarea.style.display = 'none';
+       btn.style.display = 'none';
+
+       let text = textarea.value.trim();
+       let words = text.split(/\s+/);
+       console.log(words);
+
+       let uniqueWords = [...new Set(words)];
+       console.log(uniqueWords);
+
+       let delay = 0;
+       for (let word of uniqueWords) {
+           let occurrences = countOccurrences(word, words);
+           let randColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+           const div = document.createElement('div');
+           div.textContent = word;
+           div.style.fontSize = `${occurrences + 1}rem`;
+           div.style.color = randColor;
+           div.style.position = 'absolute';
+           div.style.top = `${Math.floor(Math.random() * (winHeight - 100))}px`;
+           div.style.left = `${Math.floor(Math.random() * (winWidth - 100))}px`;
+
+           setTimeout(() => {
+               container.appendChild(div);
+           }, delay);
+
+           delay += 1000;
+       }
+   }
+
+</script>
+
+</body>
+</html>

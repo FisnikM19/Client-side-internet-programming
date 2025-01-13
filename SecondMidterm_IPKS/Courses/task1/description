@@ -1,0 +1,6 @@
+To create a game like the gif attached below. The plane can move up or down and is moved using the appropriate buttons.
+The bullets fired by the plane are fast and shoot at the alien. If they hit the alien, it disappears from the screen.
+The position of the alien is different and is randomly selected each time the game is started (browser refresh).
+
+Help: When checking for bullets, only the alien's y coordinate is looked at.
+

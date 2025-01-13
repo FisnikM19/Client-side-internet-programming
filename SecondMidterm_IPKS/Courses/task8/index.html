@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 5px 15px;
+      border: 2px solid black;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Weather Tracker</h1>
+
+<div id="form">
+  <div>
+    <label for="city">City:</label>
+    <input type="text" id="city">
+  </div>
+  <div>
+    <label for="temperature">Temperature (&deg;C)</label>
+    <input type="number" id="temperature">
+  </div>
+  <div>
+    <label for="day">Day of Month</label>
+    <input type="number" id="day">
+  </div>
+  <div>
+    <button onclick="addRecord()">Add record</button>
+  </div>
+</div>
+
+<h2>Temperature Records</h2>
+
+<table border ="2">
+  <thead>
+  <tr>
+    <th>City</th>
+    <th>Temperature (&deg;C)</th>
+    <th>Day</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+
+<div>
+  <button onclick="showChart()">Show Line Chart</button>
+</div>
+
+<div id="chart"></div>
+
+<script>
+  let cityData = new Map();
+
+  function addRecord() {
+    let city = document.getElementById('city').value;
+    let temperature = document.getElementById('temperature').value;
+    let day = document.getElementById('day').value;
+
+    if (!city || isNaN(temperature) || isNaN(day)) {
+      alert('All fields must be filled!');
+      return;
+    }
+
+    let tbody = document.querySelector('tbody');
+    tbody.innerHTML += `
+    <tr>
+    <td>${city}</td>
+    <td>${temperature}</td>
+    <td>${day}</td>
+    </tr>
+    `;
+
+    if (!cityData.has(city)) {
+      cityData.set(city, {days: [], temperatures: []});
+    }
+
+    let cityRecord = cityData.get(city);
+    cityRecord.days.push(day);
+    cityRecord.temperatures.push(temperature);
+  }
+
+  function showChart() {
+    const traces = [];
+
+    //               values  key
+    cityData.forEach((data, city) => {
+      let trace = {
+        x: data.days,
+        y: data.temperatures,
+        name: city,
+        type: 'scatter'
+      }
+      traces.push(trace);
+    });
+
+    let layout = {
+      title: 'Temperature Trends by Day'
+    }
+    Plotly.newPlot('chart', traces, layout);
+  }
+</script>
+
+</body>
+</html>

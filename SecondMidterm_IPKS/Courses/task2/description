@@ -1,0 +1,8 @@
+Create a web page for managing a watch list for movies.
+Each movie has information about its title, genre, whether it's watched or to be watched, and rating if it's already watched.
+For each movie in the system there is a card. Each card holds title and genre information about a specific movie.
+Additionally for the watched movies the rating is also shown, while the rest of the cards have a remove button.
+On the page there should also be an option to filter the movies according to their watch status or genre.
+Based on their watch status, there should be three options: view all movies, view only watched movies, or view only planned movies.
+When sorting by watched movies, they should be sorted in descending order according to the given rating.
+When filtering by genre, the number of movies added from that genre should also be displayed on the screen.

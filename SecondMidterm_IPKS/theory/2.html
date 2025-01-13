@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slide Toggle Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    #content {
+      display: none;
+      width: 200px;
+      height: 100px;
+      background-color: lightblue;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+<button id="toggleButton">Toggle Slide</button>
+<div id="content">Hello, World!</div>
+
+<script>
+  $(document).ready(function() {
+    $("#toggleButton").click(function() {
+      $("#content").slideToggle();
+    });
+  });
+</script>
+</body>
+</html>

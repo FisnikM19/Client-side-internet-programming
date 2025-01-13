@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            padding: 5px;
+        }
+        label {
+            display: inline-block;
+            width: 200px;
+        }
+
+        #cards {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #cards div {
+            border: 3px solid black;
+            text-align: center;
+            margin: 5px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Watch List</h1>
+<h2>Add a Movie</h2>
+
+<div>
+    <label for="title">Title:</label>
+    <input type="text" id="title">
+</div>
+<div>
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre">
+</div>
+<div>
+    <label for="status">Status:</label>
+    <input type="radio" id="status" name="watch" checked>Watched
+    <input type="radio" name="watch">To Watch
+</div>
+<div>
+    <label for="rating">Rating:</label>
+    <input type="text" id="rating" placeholder="Rate out of 10">
+</div>
+<div>
+    <button onclick="addMovies()">Add Movie</button>
+</div>
+
+<hr>
+
+<h2>Your Movies:</h2>
+
+<div>
+    <label for="filter">Filter by Status:</label>
+    <select name="filter" id="filter">
+        <option value="viewAll" selected>View All</option>
+        <option value="watched">Watched</option>
+        <option value="toWatch">To Watch</option>
+    </select>
+
+    <button onclick="filterMovies()">Filter</button>
+</div>
+
+<div>
+    <label for="search">Search by Genre:</label>
+    <input type="text" id="search">
+    <button onclick="searchMovie()">Search</button>
+    <span id="found"></span>
+</div>
+
+<div id="cards">
+
+</div>
+
+<!--  HTML ENDS HERE-->
+
+<script>
+    function addMovies() {
+        let title = document.getElementById('title').value;
+        let genre = document.getElementById('genre').value;
+        let status = document.getElementById('status');
+        let rating = document.getElementById('rating').value;
+
+        if (!title || !rating || !genre) {
+            alert('All fields must be filled!');
+            return;
+        }
+
+        if (parseInt(rating) < 0 || parseInt(rating) > 10) {
+            alert('The rating should be between 0-10');
+            return;
+        }
+
+        let movies = document.getElementById('cards');
+        let movie = document.createElement('div');
+
+        if (status.checked) {
+            movie.innerHTML = `
+            <p class="title">${title}</p>
+            <p class="genre">${genre}</p>
+            <p class="rating">Your rating: ${rating}/10</p>
+            `;
+            movie.setAttribute('class', 'watched');
+        } else {
+            movie.innerHTML = `
+            <p class="title">${title}</p>
+            <p class="genre">${genre}</p>
+            <button onclick="removeMovie(this)">Remove</button>
+            `;
+            movie.setAttribute('class', 'toWatch');
+        }
+
+        movies.appendChild(movie);
+    }
+
+    function filterMovies() {
+        let filterMovie = document.getElementById('filter').value;
+        let watched = document.querySelectorAll('.watched');
+        let toWatch = document.querySelectorAll('.toWatch');
+
+
+        if (filterMovie === 'watched') {
+            watched.forEach(movie => {
+                console.log(movie);
+                movie.style.display = 'block';
+            });
+            toWatch.forEach(movie => {
+                movie.style.display = 'none';
+            });
+        } else if (filterMovie === 'toWatch'){
+
+            watched.forEach(movie => {
+                movie.style.display = 'none';
+            });
+            toWatch.forEach(movie => {
+                movie.style.display = 'block';
+            });
+        } else {
+            watched.forEach(movie => {
+                movie.style.display = 'block';
+            });
+            toWatch.forEach(movie => {
+                movie.style.display = 'block';
+            });
+        }
+
+        document.getElementById('found').textContent = '';
+    }
+
+    function searchMovie() {
+        let search = document.getElementById('search');
+        let genre = document.querySelectorAll('.genre');
+        let count = 0;
+
+        genre.forEach(gen => {
+            if (search.value !== gen.textContent) {
+                let parent = gen.parentNode;
+                console.log(parent);
+                parent.style.display = 'none';
+            } else {
+                let parent = gen.parentNode;
+                parent.style.display = 'block';
+                count++;
+            }
+        });
+
+        let span = document.getElementById('found');
+        span.textContent = `${count} ${search.value} movies are found.`
+        search.value = '';
+    }
+
+    function removeMovie(btn) {
+        let parent = btn.parentNode;
+        document.getElementById('cards').removeChild(parent);
+    }
+
+</script>
+</body>
+</html>

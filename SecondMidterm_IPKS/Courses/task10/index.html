@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+
+    button {
+      position: absolute;
+      top: 10px;
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      z-index: 2;
+    }
+
+    #first-btn {
+      left: 20px;
+    }
+    #second-btn {
+      left: 180px;
+    }
+
+  </style>
+  <script src="anime.min.js"></script>
+</head>
+<body>
+
+<div id="container">
+  <button id="first-btn">Generate first Point</button>
+  <button id="second-btn">Generate second Point</button>
+</div>
+
+<script>
+  const firstBtn = document.getElementById("first-btn");
+  const secondBtn = document.getElementById("second-btn");
+
+  let x1, y1, x2, y2;
+
+  firstBtn.addEventListener('click', () => {
+    // Generate first point (smaller values)
+    x1 = Math.floor(Math.random() * 700);
+    y1 = Math.floor(Math.random() * 300);
+  });
+
+  secondBtn.addEventListener('click', () => {
+    // Generate second point (larger values)
+    x2 = Math.floor(Math.random() * 700) + 500;
+    y2 = Math.floor(Math.random() * 300) + 500;
+
+    // Calculate width and height
+    const width = x2 - x1;
+    const height = y2 - y1;
+
+    // Create a new rectangle element
+    const newRectangle = document.createElement("div");
+    newRectangle.classList.add('rectangle');
+
+    // Set the new rectangle's styles
+    newRectangle.style.width = `${width}px`;
+    newRectangle.style.height = `${height}px`;
+    newRectangle.style.position = 'absolute';
+    newRectangle.style.left = `${x1}px`;
+    newRectangle.style.top = `${y1}px`;
+
+    // Set the random background color
+    newRectangle.style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+
+    // Append the rectangle to the container
+    document.getElementById("container").appendChild(newRectangle);
+
+    // Trigger the opacity transition to make it visible
+    anime({
+      targets: newRectangle,
+      opacity: [0, 1],
+      easing: 'linear'
+    })
+  })
+
+</script>
+
+</body>
+</html>

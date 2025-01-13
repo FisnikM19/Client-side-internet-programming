@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<img src="s1.png" alt=""/>
+<img src="s2.png" alt=""/>
+<img src="s3.png" alt=""/>
+<img src="s4.png" alt=""/>
+<img src="s5.png" alt=""/>
+<img src="s6.png" alt=""/>
+
+
+<p id="paragraph">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio ad mollitia, consectetur earum tenetur reiciendis facere recusandae. Praesentium, cupiditate! Voluptatem exercitationem eum eius, dolore molestiae impedit sint sit non doloribus sapiente, excepturi neque. Amet aut eius placeat est quod eum ullam provident dicta voluptates cumque qui non dignissimos veritatis ipsa, eligendi cupiditate quasi odio nobis debitis perspiciatis! Aliquam et odio magni fuga temporibus explicabo ea esse, nihil cumque.</p>
+
+<div id="form">
+    <label for="color">color</label>
+    <select name="color" id="color">
+        <option value="red">red</option>
+        <option value="blue">blue</option>
+        <option value="yellow">yellow</option>
+        <option value="black">black</option>
+    </select>
+
+    <label for="width">width</label>
+    <select name="width" id="width">
+        <option value="100px">100px</option>
+        <option value="200px">200px</option>
+        <option value="300px">300px</option>
+        <option value="400px">400px</option>
+    </select>
+
+    <label for="background-color">background-color</label>
+    <select name="background-color" id="background-color">
+        <option value="red">red</option>
+        <option value="blue">blue</option>
+        <option value="yellow">yellow</option>
+        <option value="black">black</option>
+    </select>
+</div>
+
+
+<script>
+    /*
+1. Implement a snow falling animation. Snowflakes fall from the top of the screen to the bottom at different random positions
+at different random speeds. The HTML code is attached and must not be modified in any way.
+A preview of how it should look is provided in the file zadacha1.gif.
+
+2. Implement an option to change the style of paragraphs on a page using javascript code.
+Which styles can be changed and with which options is given in a json string.
+For each style, a select should be created that will have the options for the given style as options.
+Initially, the paragraphs have no style and for the given json string it should look like in Figure 1.
+By changing the selection of select, the corresponding style was also changed (Figure 2, Figure 3).
+     */
+
+    imgs = document.getElementsByTagName('img');
+
+    for (let i = 0; i < imgs.length; i++) {
+        imgs[i].style.position = 'absolute';
+        imgs[i].style.top = '-200px';
+        imgs[i].style.left = `${Math.random() * 1200}px`;
+        imgs[i].style.width = '150px';
+
+        setInterval(fall, (Math.random() + 0.5) * 5, imgs[i]);
+        //        function      time                  parameter
+        // fall(imgs[i])
+    }
+
+    function fall(elem) {
+        let pos = Number(elem.style.top.split('px')[0]);
+
+        elem.style.top = pos + 1 + "px";
+        if (pos > 1000) {
+            elem.style.top = '-200px';
+        }
+    }
+
+    // Get references to the paragraph and the select elements
+    let paragraph = document.getElementById('paragraph');
+    let colorSelect = document.getElementById('color');
+    let widthSelect = document.getElementById('width');
+    let bgColorSelect = document.getElementById('background-color');
+
+    // Add event listeners to each select element to update the paragraph styles
+    colorSelect.addEventListener('change', function () {
+        paragraph.style.color = this.value;
+    });
+
+    widthSelect.addEventListener('change', function () {
+        paragraph.style.width = this.value;
+    });
+
+    bgColorSelect.addEventListener('change', function () {
+        paragraph.style.backgroundColor = this.value;
+    });
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+You need to program a game of guessing a calculation. When the page loads, two one-digit, two two-digit and two three-digit random numbers
+are generated and placed as in the image, and the 60-second timer starts counting down.
+The user needs to enter a calculation consisting of only the first five suggested numbers, the operations +, - and * and brackets ().
+By pressing the check button, it is checked whether the calculation is equal to the sixth number.
+In case of a hit or when the time runs out, the input field and the button are disabled.

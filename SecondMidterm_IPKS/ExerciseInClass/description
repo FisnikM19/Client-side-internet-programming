@@ -1,0 +1,8 @@
+Implement a COVID-19 dashboard with statistics about the pandemic for countries around the world. The data is fetched from the API at
+https://disease.sh/v3/covid-19/countries using the GET method. The API returns a JSON array of objects, where each object contains information about
+a country, including the total number of cases, recovered cases, deaths, population, and a link to the country's flag. Using this data, the dashboard
+should be created and visualized. The dashboard must contain a bar chart and two filters. The first filter, "View all countries", displays
+a grouped chart bar comparing the total cases, recovered cases, and deaths for all countries. The second filter, which allows selection by country,
+enables the user to choose a specific country from a dropdown menu and displays a single bar chart for that country, while the country's flag is
+animated and displayed. When the flag is clicked, its shape should toggle between a rectangle and a circle with animation. Switching between the filters
+should also include appropriate transitions.

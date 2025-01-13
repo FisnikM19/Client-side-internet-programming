@@ -1,0 +1,5 @@
+Create a web page where the user can click a button to generate multiple squares of random colors.
+Each square will fall from the top to the bottom of the screen and fade out as it reaches the bottom.
+When the Generate Squares button is clicked, the page should randomly create 10 squares.
+Each square will start from a random position at the top of the screen, fall to the bottom, and fade out as it moves.
+Additionally, the page should include a Reset button that clears all squares from the screen that are still in the process of animating.

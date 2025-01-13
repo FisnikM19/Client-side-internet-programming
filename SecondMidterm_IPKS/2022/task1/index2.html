@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="anime.min.js"></script>
+  <style>
+    body {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- I'M DOING THIS AGAIN, I WILL TRY TO DO BY MYSELF-->
+
+<script>
+  let data = '[{"size":50,"color":"red"},{"size":40,"color":"green"},{"size":20,"color":"blue"},{"size":35,"color":"yellow"},{"size":25,"color":"orange"}]';
+  data = JSON.parse(data);
+  console.log(data);
+
+  let winWidth = window.innerWidth;
+  let winHeight = window.innerHeight;
+
+  function addDivs(item) {
+    let div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.top = `${Math.floor(Math.random() * (winHeight - 100))}px`;
+    div.style.left = `${Math.floor(Math.random() * (winWidth - 100))}px`;
+    div.style.backgroundColor = `${item.color}`;
+    div.style.width = `${item.size}px`;
+    div.style.height = `${item.size}px`;
+
+    div.addEventListener('click', () => {
+      moveItem(div);
+    })
+
+    document.body.appendChild(div);
+  }
+
+  for (let item of data) {
+    addDivs(item);
+  }
+
+  function moveItem(div) {
+    anime({
+      targets: div,
+      top: parseInt(div.style.top) + parseInt(div.style.height),
+      left: parseInt(div.style.left) + parseInt(div.style.width),
+      loop: false,
+      easing: 'linear',
+    });
+
+    let dir = [
+      {
+        x: parseInt(div.style.height),
+        y: -parseInt(div.style.width),
+      },
+      {
+        x: -parseInt(div.style.height),
+        y: parseInt(div.style.width),
+      },
+      {
+        x: -parseInt(div.style.height),
+        y: -parseInt(div.style.width),
+      }
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      let cloneDiv = div.cloneNode();
+      console.log(cloneDiv);
+      document.body.appendChild(cloneDiv);
+
+      cloneDiv.addEventListener('click', () => {
+        moveItem(cloneDiv);
+      });
+
+      anime({
+        targets: cloneDiv,
+        top: parseInt(cloneDiv.style.top) + dir[i].x,
+        left: parseInt(cloneDiv.style.left) + dir[i].y,
+        loop: false,
+        easing: 'linear',
+      });
+    }
+  }
+
+</script>
+
+</body>
+</html>

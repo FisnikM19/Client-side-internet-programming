@@ -1,0 +1,5 @@
+Create a web page that will contain a text area and a button. Any text can be entered in the text area.
+By pressing the show button, the text area and the button disappear (10 points) and the words in the text are displayed as shown in Figure 2.
+The text should be divided into words (10 points) and the words appear one by one (20 points),
+in a random location in a random color (20 points),
+so that the size of the words depends on the number of occurrences of the word in the text (20 points).

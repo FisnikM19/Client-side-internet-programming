@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #container{
+            width: 800px;
+            height: 600px;
+            display: inline-block;
+            border: 1px solid black;
+        }
+        p{
+            display: inline-block;
+            vertical-align: top;
+        }
+        .rectangle{
+            display: inline-block;
+            border: 1px solid black;
+            position: absolute;
+        }
+        .line{
+            display: inline-block;
+            width: 3px;
+            height: 600px;
+            position: absolute;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+
+</div>
+<p>Poeni: <span id="score"></span></p>
+<script>
+    let n_rect=0
+    let n_line=0
+    fetch("https://webhook.site/e42f376b-55b5-43cb-9bf8-778beae9eea2")
+        .then(response=>response.json())
+        .then(function (data) {
+            console.log(data);
+            n_rect = data.length
+            for(let i=0; i<data.length; i++){
+                let rect = "<div id='"+data[i].id+"' class='rectangle' style='width: "+data[i].width+";height: "+data[i].height+";background: "+data[i].color+";left: "+data[i].left+"px;top: "+data[i].top+"px;' score='"+data[i].score+"' dir='"+data[i].dir+"' current='"+(i%2)+"'></div>"
+                document.getElementById("container").innerHTML += rect
+            }
+            start_moving();
+        })
+    let counter = 0
+    function start_moving() {
+        counter++;
+        for (let i=1; i<=n_rect; i++){
+            let obj = document.getElementById(i)
+            if(obj.getAttribute("dir")==="vertical"){
+                let top = parseInt(obj.style.top.split("px")[0])
+                if(obj.getAttribute("current")==="0"){
+                    top -= 5
+                    if(top<=8){
+                        obj.setAttribute("current", "1")
+                    }
+                }else{
+                    top += 5
+                    let height = parseInt(obj.style.height.split("px")[0])
+                    if(top+height>=600){
+                        obj.setAttribute("current", "0")
+                    }
+                }
+                obj.style.top = top+"px"
+            }else{
+                let left = parseInt(obj.style.left.split("px")[0])
+                if(obj.getAttribute("current")==="0"){
+                    left += 5
+                    let width = parseInt(obj.style.width.split("px")[0])
+                    if(left+width>=800){
+                        obj.setAttribute("current", "1")
+                    }
+                }else{
+                    left -= 5
+                    if(left<=8){
+                        obj.setAttribute("current", "0")
+                    }
+                }
+                obj.style.left = left+"px"
+            }
+        }
+        if(counter<50){
+            setTimeout(start_moving, 50)
+        }else{
+            counter=0;
+            flash_the_line()
+        }
+    }
+    let score = 0
+    function flash_the_line() {
+        n_line++;
+        let line_pos = Math.floor(Math.random()*800);
+        let line = "<div class='line' style='left: "+line_pos+"px;'></div>"
+        document.getElementById("container").innerHTML += line
+        for(let i=1; i<=n_rect; i++){
+            let obj = document.getElementById(i)
+            let start = parseInt(obj.style.left.split("px")[0])
+            let end = start + parseInt(obj.style.width.split("px")[0])
+            if(line_pos>=start && line_pos<=end){
+                score += parseInt(obj.getAttribute("score"))
+                obj.style.display = "none"
+                obj.setAttribute("score", "0")
+            }
+        }
+        document.getElementById("score").innerHTML = score
+        if(n_line<3){
+            setTimeout(clear_lines, 1000)
+        }
+
+    }
+    function clear_lines() {
+        let lines = document.getElementsByClassName("line")
+        for(let i=0; i<lines.length; i++){
+            lines[i].style.display = "none"
+        }
+        start_moving();
+    }
+</script>
+</body>
+</html>

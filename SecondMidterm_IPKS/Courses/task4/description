@@ -1,0 +1,13 @@
+A CRUD application (Create, Read, Update, Delete) needs to be implemented for managing data about authors and books.
+This application should allow users to add, update, view, and delete information about authors and their books.
+A form should be created where users can input the author's name(s) separated by a semicolon (“;”), the book title, and the book category.
+The available categories are:
+Fiction
+Non-Fiction
+Mystery
+Fantasy
+Science Fiction
+Biography
+
+Additionally, a filter system should be implemented, allowing users to filter books by category or search for a specific author.
+
